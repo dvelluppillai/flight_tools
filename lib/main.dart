@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:airport/airports.dart';
+import 'package:airport/main.dart';
+import 'package:airport/models/models.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,6 +17,8 @@ class _MyAppState extends State<MyApp> {
   Completer<GoogleMapController> _controller = Completer();
 
   static const LatLng _center = const LatLng(-37, 173);
+
+  static final resultado = Airports.getAirport("SBSP");
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -28,7 +33,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Colors.green[700],
         ),
         body: Stack(
-          children: [
+          children: <Widget>[
             GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
@@ -36,34 +41,39 @@ class _MyAppState extends State<MyApp> {
                 zoom: 5.0,
               ),
             ),
-            Container(
-              color: Colors.white,
-              width: double.infinity,
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: const TextField(
-                      obscureText: true,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: new TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'From airport',
+                        contentPadding: EdgeInsets.all(10),
+                        filled: true,
+                        fillColor: Colors.white,
+                        labelText: 'From Airport',
                       ),
                     ),
                   ),
-                  Container(
-                    child: const TextField(
-                      obscureText: true,
+                ),
+                new Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: new TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         border: OutlineInputBorder(),
-                        labelText: 'To airport',
+                        contentPadding: EdgeInsets.all(10),
+                        labelText: 'To Airport',
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             )
           ],
         ),
